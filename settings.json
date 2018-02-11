@@ -1,0 +1,28 @@
+{
+  "galaxy.meteor.com": {
+     "env": {
+       "ROOT_URL": "https://teamder.eu.meteorapp.com",
+       "MONGO_URL": "mongodb://meteor:meteor@ds129428.mlab.com:29428/teamder"
+     }
+   },
+   "private": {
+    "MAIL_URL": "",
+    "OAuth": {
+      "facebook": {
+        "appId": "129439904540117",
+        "secret": "2bea2e393e698c932bad7dc70e3e2ba6",
+        "loginStyle": "popup"
+      },
+      "google": {
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      },
+      "github": {
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor --settings settings-development.json",
+    "deploy": "DEPLOY_HOSTNAME=eu-west-1.galaxy.meteor.com meteor deploy teamder.eu.meteorapp.com --settings settings.json",
     "test": "jest"
   },
   "dependencies": {
