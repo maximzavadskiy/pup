@@ -5,33 +5,42 @@ import { Table, Alert, Button } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Bert } from 'meteor/themeteorchef:bert';
-import DocumentsCollection from '../../../api/Documents/Documents';
+import _ from 'lodash';
+// import UsersCollection from '../../../api/Documents/Documents';
+
 import { timeago, monthDayYearAtTime } from '../../../modules/dates';
 import Loading from '../../components/Loading/Loading';
 
 import './Documents.scss';
 
-const handleRemove = (documentId) => {
-  if (confirm('Are you sure? This is permanent!')) {
-    Meteor.call('documents.remove', documentId, (error) => {
-      if (error) {
-        Bert.alert(error.reason, 'danger');
-      } else {
-        Bert.alert('Document deleted!', 'success');
-      }
-    });
-  }
+const handleRemove = (documentId, ) => {
+  // if (confirm('Are you sure? This is permanent!')) {
+  //   Meteor.call('documents.remove', documentId, (error) => {
+  //     if (error) {
+  //       Bert.alert(error.reason, 'danger');
+  //     } else {
+  //       Bert.alert('Document deleted!', 'success');
+  //     }
+  //   });
+  // }
+};
+
+const addOpinion = (opinionKey, _id) => {
+  const opinionPath = `profile.${opinionKey}`;
+  Meteor.users.update({ _id: Meteor.user()._id }, {
+    $addToSet: { [opinionPath]: _id },
+  });
 };
 
 const Documents = ({
-  loading, documents, match, history,
+  loading, unratedUsers, match, history,
 }) => (!loading ? (
   <div className="Documents">
     <div className="page-header clearfix">
-      <h4 className="pull-left">Documents</h4>
-      <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Document</Link>
+      <h4 className="pull-left">Find matches</h4>
+      <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Your Matches</Link>
     </div>
-    {documents.length ?
+    {unratedUsers.length ?
       <Table responsive>
         <thead>
           <tr>
@@ -43,7 +52,7 @@ const Documents = ({
           </tr>
         </thead>
         <tbody>
-          {documents.map(({
+          {unratedUsers.map(({
             _id, title, createdAt, updatedAt,
           }) => (
             <tr key={_id}>
@@ -53,39 +62,46 @@ const Documents = ({
               <td>
                 <Button
                   bsStyle="primary"
-                  onClick={() => history.push(`${match.url}/${_id}`)}
+                  onClick={() => addOpinion('teammateLikes', _id)}
                   block
                 >
-                  View
+                  Yay!
                 </Button>
               </td>
               <td>
                 <Button
                   bsStyle="danger"
-                  onClick={() => handleRemove(_id)}
+                  onClick={() => addOpinion('teammateSkips', _id)}
                   block
                 >
-                  Delete
+                  Not now
                 </Button>
               </td>
             </tr>
           ))}
         </tbody>
-      </Table> : <Alert bsStyle="warning">No documents yet!</Alert>}
+      </Table> : <Alert bsStyle="warning">
+        You are the first one! I bet other people will join in few minutes.
+      </Alert>}
   </div>
 ) : <Loading />);
 
 Documents.propTypes = {
   loading: PropTypes.bool.isRequired,
-  documents: PropTypes.arrayOf(PropTypes.object).isRequired,
+  unratedUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
 
 export default withTracker(() => {
-  const subscription = Meteor.subscribe('documents');
+  // const subscription = Meteor.subscribe('users.unrated');
+  const ratedIds = _.concat(Meteor.user().profile.teammateLikes || [],
+                            Meteor.user().profile.teammateSkips || []);
+
   return {
-    loading: !subscription.ready(),
-    documents: DocumentsCollection.find().fetch(),
+    loading: false,
+    unratedUsers: Meteor.users.find({
+      _id: { $nin: ratedIds },
+    }).fetch(),
   };
 })(Documents);
