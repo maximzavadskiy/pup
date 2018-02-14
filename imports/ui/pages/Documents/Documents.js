@@ -44,7 +44,7 @@ const Documents = ({
       <Table responsive>
         <thead>
           <tr>
-            <th>Title</th>
+            <th>Name</th>
             <th>Last Updated</th>
             <th>Created</th>
             <th />
@@ -53,10 +53,10 @@ const Documents = ({
         </thead>
         <tbody>
           {unratedUsers.map(({
-            _id, title, createdAt, updatedAt,
+            _id, profile, createdAt, updatedAt,
           }) => (
             <tr key={_id}>
-              <td>{title}</td>
+              <td>{`${profile.name.first} ${profile.name.last}`}</td>
               <td>{timeago(updatedAt)}</td>
               <td>{monthDayYearAtTime(createdAt)}</td>
               <td>

@@ -39,28 +39,28 @@ const MatchedUsers = ({
         </thead>
         <tbody>
           {matchedUsers.map(({
-            _id, title, createdAt, updatedAt,
+            _id, profile, createdAt, updatedAt,
           }) => (
             <tr key={_id}>
-              <td>{title}</td>
+              <td>{`${profile.name.first} ${profile.name.last}`}</td>
               <td>{timeago(updatedAt)}</td>
               <td>{monthDayYearAtTime(createdAt)}</td>
               <td>
                 <Button
                   bsStyle="primary"
-                  onClick={() => addOpinion('teammateLikes', _id)}
+                  onClick={() => console.log('TODO')}
                   block
                 >
-                  Yay!
+                  Contact!
                 </Button>
               </td>
               <td>
                 <Button
                   bsStyle="danger"
-                  onClick={() => addOpinion('teammateSkips', _id)}
+                  onClick={() => console.log('TODO')}
                   block
                 >
-                  Not now
+                  Remove from matches
                 </Button>
               </td>
             </tr>

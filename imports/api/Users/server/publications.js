@@ -1,5 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 
+Meteor.users.allow({
+  update: () => true,
+  remove: () => true
+});
+
 Meteor.publish('users.editProfile', function usersProfile() {
   return Meteor.users.find(this.userId, {
     fields: {
