@@ -56,7 +56,7 @@ const CandidateList = ({
                                                 <Glyphicon glyph="star" />
                                             </Button>
                                             <Button
-                                                onClick={() => null}
+                                                onClick={() => history.push(`chat/${_id}`)}
                                             >
                                                 <Glyphicon glyph="envelope" />
                                             </Button>

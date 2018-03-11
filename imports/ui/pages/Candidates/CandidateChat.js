@@ -6,6 +6,7 @@ import NotFound from '../NotFound/NotFound';
 
 const CandidateChat = ({ candidate, history }) => (candidate ? (
   <div className="CandidateChat">
+    <p> Chat rendered </p>
     <h4 className="page-header">{
       `Messaging to "${candidate.profile.name.first} ${candidate.profile.name.last}"`
     }</h4>
@@ -25,6 +26,6 @@ export default withTracker(({ match }) => {
   const candidateId = match.params._id;
   return {
     loading: false,
-    user: Users.findOne(candidateId),
+    candidate: Meteor.users.findOne(candidateId),
   };
 })(CandidateChat);
