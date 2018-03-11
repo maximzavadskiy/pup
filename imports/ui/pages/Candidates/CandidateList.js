@@ -35,7 +35,7 @@ const CandidateList = ({
 }) => (!loading ? (
     <div className="Documents">
         <div className="page-header clearfix">
-            <h4 className="pull-left">Find matches</h4>
+            <h4 className="pull-left">Find teammates</h4>
         </div>
         <Grid>
             {unratedUsers.length ?
