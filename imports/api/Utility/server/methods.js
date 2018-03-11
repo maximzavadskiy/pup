@@ -8,4 +8,8 @@ Meteor.methods({
     check(fileName, String);
     return parseMarkdown(getPrivateFile(`pages/${fileName}.md`));
   },
+  'dev.clearLikes': function clearLikes() {
+     console.log(Meteor.users.find({}).count())
+     Meteor.users.update({}, { $unset: {'profile.teammateLikes': ''}}, {multi:true});
+  },
 });
