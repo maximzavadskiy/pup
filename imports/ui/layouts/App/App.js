@@ -11,8 +11,9 @@ import Navigation from '../../components/Navigation/Navigation';
 import Authenticated from '../../components/Authenticated/Authenticated';
 import Public from '../../components/Public/Public';
 import Index from '../../pages/Index/Index';
-import MatchedUsers from '../../pages/Documents/MatchedUsers';
-import Documents from '../../pages/Documents/Documents';
+import EngagedCandidatesList from '../../pages/Candidates/EngagedCandidatesList';
+import CandidateList from '../../pages/Candidates/CandidateList';
+import CandidateChat from '../../pages/Candidates/CandidateChat';
 import NewDocument from '../../pages/NewDocument/NewDocument';
 import ViewDocument from '../../pages/ViewDocument/ViewDocument';
 import EditDocument from '../../pages/EditDocument/EditDocument';
@@ -48,12 +49,10 @@ const App = props => (
         <Grid>
           <Switch>
             <Route exact name="index" path="/" component={Index} />
-            <Authenticated exact path="/matched" component={MatchedUsers} {...props} />
-            <Authenticated exact path="/documents" component={Documents} {...props} />
-            <Authenticated exact path="/documents" component={Documents} {...props} />
-            <Authenticated exact path="/documents/new" component={NewDocument} {...props} />
-            <Authenticated exact path="/documents/:_id" component={ViewDocument} {...props} />
-            <Authenticated exact path="/documents/:_id/edit" component={EditDocument} {...props} />
+            <Authenticated exact path="/engagements-list" component={EngagedCandidatesList} {...props} />
+            <Authenticated exact path="/find-teammates" component={CandidateList} {...props} />
+            <Authenticated exact path="/chat/:_id" component={CandidateChat} {...props} />
+            <Authenticated exact path="/matches/:_id" component={ViewDocument} {...props} />
             <Authenticated exact path="/profile" component={Profile} {...props} />
             <Public path="/signup" component={Signup} {...props} />
             <Public path="/login" component={Login} {...props} />

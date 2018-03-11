@@ -6,24 +6,10 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Bert } from 'meteor/themeteorchef:bert';
 import _ from 'lodash';
-// import UsersCollection from '../../../api/Documents/Documents';
-
 import { timeago, monthDayYearAtTime } from '../../../modules/dates';
 import Loading from '../../components/Loading/Loading';
 
 import './Documents.scss';
-
-const handleRemove = (documentId, ) => {
-  // if (confirm('Are you sure? This is permanent!')) {
-  //   Meteor.call('documents.remove', documentId, (error) => {
-  //     if (error) {
-  //       Bert.alert(error.reason, 'danger');
-  //     } else {
-  //       Bert.alert('Document deleted!', 'success');
-  //     }
-  //   });
-  // }
-};
 
 const addOpinion = (opinionKey, _id) => {
   const opinionPath = `profile.${opinionKey}`;
@@ -32,19 +18,18 @@ const addOpinion = (opinionKey, _id) => {
   });
 };
 
-const Documents = ({
-  loading, unratedUsers, match, history,
+const EngagedCandidatesList = ({
+  loading, matchedUsers, match, history,
 }) => (!loading ? (
   <div className="Documents">
     <div className="page-header clearfix">
-      <h4 className="pull-left">Find matches</h4>
-      <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Your Matches</Link>
+      <h4 className="pull-left">People</h4>
     </div>
-    {unratedUsers.length ?
+    {matchedUsers.length ?
       <Table responsive>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Title</th>
             <th>Last Updated</th>
             <th>Created</th>
             <th />
@@ -52,7 +37,7 @@ const Documents = ({
           </tr>
         </thead>
         <tbody>
-          {unratedUsers.map(({
+          {matchedUsers.map(({
             _id, profile, createdAt, updatedAt,
           }) => (
             <tr key={_id}>
@@ -62,47 +47,46 @@ const Documents = ({
               <td>
                 <Button
                   bsStyle="primary"
-                  onClick={() => addOpinion('teammateLikes', _id)}
+                  onClick={() => console.log('TODO')}
                   block
                 >
-                  Yay!
+                  Contact!
                 </Button>
               </td>
               <td>
                 <Button
                   bsStyle="danger"
-                  onClick={() => addOpinion('teammateSkips', _id)}
+                  onClick={() => console.log('TODO')}
                   block
                 >
-                  Not now
+                  Remove from matches
                 </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table> : <Alert bsStyle="warning">
-        You are the first one! I bet other people will join in few minutes.
+        Here will be displayed all people whom you contacted, or who has contacted you.
       </Alert>}
   </div>
 ) : <Loading />);
 
-Documents.propTypes = {
+EngagedCandidatesList.propTypes = {
   loading: PropTypes.bool.isRequired,
-  unratedUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  matchedUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
 
 export default withTracker(() => {
-  // const subscription = Meteor.subscribe('users.unrated');
-  const excludeUsers = _.concat(Meteor.user().profile.teammateLikes || [],
-                                Meteor.user().profile.teammateSkips || [],
-                                Meteor.user()._id);
+  // If current user and another one liked each other, its a match!
+  const likeEachOtherUsers = Meteor.users.find({
+    _id: { $in: Meteor.user().profile.teammateLikes || [] },
+    'profile.teammateLikes': Meteor.user()._id,
+  }).fetch();
 
   return {
     loading: false,
-    unratedUsers: Meteor.users.find({
-      _id: { $nin: excludeUsers },
-    }).fetch(),
+    matchedUsers: likeEachOtherUsers,
   };
-})(Documents);
+})(EngagedCandidatesList);
