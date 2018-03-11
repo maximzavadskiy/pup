@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Table, Alert, Button } from 'react-bootstrap';
+import { Table, Alert, Button, Grid, Row, Col, Panel, Glyphicon } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Bert } from 'meteor/themeteorchef:bert';
@@ -25,49 +25,39 @@ const EngagedCandidatesList = ({
     <div className="page-header clearfix">
       <h4 className="pull-left">People</h4>
     </div>
-    {matchedUsers.length ?
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Last Updated</th>
-            <th>Created</th>
-            <th />
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {matchedUsers.map(({
-            _id, profile, createdAt, updatedAt,
-          }) => (
-            <tr key={_id}>
-              <td>{`${profile.name.first} ${profile.name.last}`}</td>
-              <td>{timeago(updatedAt)}</td>
-              <td>{monthDayYearAtTime(createdAt)}</td>
-              <td>
-                <Button
-                  bsStyle="primary"
-                  onClick={() => console.log('TODO')}
-                  block
-                >
-                  Contact!
-                </Button>
-              </td>
-              <td>
-                <Button
-                  bsStyle="danger"
-                  onClick={() => console.log('TODO')}
-                  block
-                >
-                  Remove from matches
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table> : <Alert bsStyle="warning">
-        Here will be displayed all people whom you contacted, or who has contacted you.
+      <Grid>
+          {matchedUsers.length ? matchedUsers.map(({
+                        _id, profile, createdAt, updatedAt,
+                    }) => (
+                        <Row key={_id}>
+                            <Col xs={12}>
+
+                                  <Panel
+                                    header={<a> {`${profile.name.first} ${profile.name.last}`} </a>}
+                                    footer={
+                                        <div>
+                                            <Button
+                                                onClick={() => history.push(`chat/${_id}`)}
+                                            >
+                                                <Glyphicon glyph="envelope" />
+                                            </Button>
+                                        </div>
+                                    }
+                                  >
+                                    { (profile.teammateChats && profile.teammateChats.indexOf(Meteor.user()._id) !== -1) ?
+                                      <p> You & the user initiated Chat with each other! </p> :
+                                      <p> One of you have starred another - drop a message and see what you can do together! </p>
+                                    }
+
+                                  </Panel>
+
+                            </Col>
+                        </Row>
+                    ))
+          : <Alert bsStyle="warning">
+          Here will be displayed all people whom you contacted, or who has contacted you.
       </Alert>}
+      </Grid>
   </div>
 ) : <Loading />);
 
@@ -80,13 +70,16 @@ EngagedCandidatesList.propTypes = {
 
 export default withTracker(() => {
   // If current user and another one liked each other, its a match!
-  const likeEachOtherUsers = Meteor.users.find({
-    _id: { $in: Meteor.user().profile.teammateLikes || [] },
-    'profile.teammateLikes': Meteor.user()._id,
+  const engagedUsers = Meteor.users.find({
+    $or: [
+      { _id: { $in: Meteor.user().profile.teammateLikes || [] } },
+      { 'profile.teammateLikes': Meteor.user()._id },
+      { 'profile.teammateChats': Meteor.user()._id }
+    ]
   }).fetch();
 
   return {
     loading: false,
-    matchedUsers: likeEachOtherUsers,
+    matchedUsers: engagedUsers,
   };
 })(EngagedCandidatesList);
