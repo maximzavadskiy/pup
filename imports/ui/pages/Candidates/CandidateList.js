@@ -54,11 +54,19 @@ const CandidateList = ({
                                                 onClick={() => addOpinion('teammateLikes', _id)}
                                             >
                                                 <Glyphicon glyph="star" />
+                                                Star
                                             </Button>
                                             <Button
-                                                onClick={() => history.push(`chat/${_id}`)}
+                                                onClick={() => window.open('https://slack.com/app_redirect?channel=D9RQTSFDG&team=T9SS6CSMV','_blank')}
                                             >
                                                 <Glyphicon glyph="envelope" />
+                                                Private Chat
+                                            </Button>
+                                            <Button
+                                                onClick={() => window.open('https://slack.com/app_redirect?channel=C9SLLBANA&team=T9SS6CSMV','_blank')}
+                                            >
+                                                <Glyphicon glyph="globe" />
+                                                Guestbook Chat
                                             </Button>
                                         </div>
                                     }
