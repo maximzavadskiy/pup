@@ -57,13 +57,13 @@ const CandidateList = ({
                                                 Star
                                             </Button>
                                             <Button
-                                                onClick={() => window.open('https://teamify-group.slack.com/messages/D9RQTSFDG/','_blank')}
+                                                onClick={() => window.open('https://slack.com/app_redirect?channel=D9RQTSFDG&team=T9SS6CSMV','_blank')}
                                             >
                                                 <Glyphicon glyph="envelope" />
                                                 Private Chat
                                             </Button>
                                             <Button
-                                                onClick={() => window.open('https://teamify-group.slack.com/messages/C9SLLBANA/','_blank')}
+                                                onClick={() => window.open('https://slack.com/app_redirect?channel=C9SLLBANA&team=T9SS6CSMV','_blank')}
                                             >
                                                 <Glyphicon glyph="globe" />
                                                 Guestbook Chat
