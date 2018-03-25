@@ -18,6 +18,7 @@ import NewDocument from '../../pages/NewDocument/NewDocument';
 import ViewDocument from '../../pages/ViewDocument/ViewDocument';
 import EditDocument from '../../pages/EditDocument/EditDocument';
 import Signup from '../../pages/Signup/Signup';
+import AutoSignup from '../../pages/Signup/AutoSignup';
 import Login from '../../pages/Login/Login';
 import Logout from '../../pages/Logout/Logout';
 import VerifyEmail from '../../pages/VerifyEmail/VerifyEmail';
@@ -55,6 +56,7 @@ const App = props => (
             <Authenticated exact path="/matches/:_id" component={ViewDocument} {...props} />
             <Authenticated exact path="/profile" component={Profile} {...props} />
             <Public path="/signup" component={Signup} {...props} />
+            <Public path="/auto-signup/email=:email" component={AutoSignup} {...props} />
             <Public path="/login" component={Login} {...props} />
             <Route path="/logout" component={Logout} {...props} />
             <Route name="verify-email" path="/verify-email/:token" component={VerifyEmail} />
