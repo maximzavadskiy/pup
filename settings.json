@@ -6,23 +6,6 @@
      }
    },
    "private": {
-    "MAIL_URL": "",
-    "OAuth": {
-      "facebook": {
-        "appId": "129439904540117",
-        "secret": "2bea2e393e698c932bad7dc70e3e2ba6",
-        "loginStyle": "popup"
-      },
-      "google": {
-        "clientId": "",
-        "secret": "",
-        "loginStyle": "popup"
-      },
-      "github": {
-        "clientId": "",
-        "secret": "",
-        "loginStyle": "popup"
-      }
-    }
+    "MAIL_URL": ""
   }
 }
