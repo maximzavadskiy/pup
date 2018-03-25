@@ -15,13 +15,15 @@ class Signup extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      email: ""
+      email: "",
+      chatLink: ""
     }
   }
 
   componentDidMount() {
     this.setState({
-      email: this.props.match.params.email
+      email: this.props.match.params.email,
+      chatLink: this.props.match.params.privateChatLink
     })
     const component = this;
 
@@ -148,6 +150,22 @@ class Signup extends React.Component {
                 />
                 <InputHint>Use at least six characters.</InputHint>
               </FormGroup>
+              <AccountPageFooter>
+
+              <FormGroup>
+                <ControlLabel> Slack Chat Link (dont change it!) </ControlLabel>
+                <input
+                  type="text"
+                  name="chat_link"
+                  value={this.state.chatLink}
+                  onChange={(event, value) => {this.setState({chatLink: value})}}
+                  className="form-control"
+                />
+                <InputHint> Teamify Slack Bot has prifilled that fo you :) </InputHint>
+              </FormGroup>
+
+              </AccountPageFooter>
+
               <Button type="submit" bsStyle="success">Sign Up</Button>
               <AccountPageFooter>
                 <p>Already have an account? <Link to="/login">Log In</Link>.</p>

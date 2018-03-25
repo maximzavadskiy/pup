@@ -56,7 +56,7 @@ const App = props => (
             <Authenticated exact path="/matches/:_id" component={ViewDocument} {...props} />
             <Authenticated exact path="/profile" component={Profile} {...props} />
             <Public path="/signup" component={Signup} {...props} />
-            <Public path="/auto-signup/email=:email" component={AutoSignup} {...props} />
+            <Public path="/auto-signup/email=:email/private-chat-link=:privateChatLink" component={AutoSignup} {...props} />
             <Public path="/login" component={Login} {...props} />
             <Route path="/logout" component={Logout} {...props} />
             <Route name="verify-email" path="/verify-email/:token" component={VerifyEmail} />
