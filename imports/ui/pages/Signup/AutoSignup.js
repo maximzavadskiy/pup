@@ -23,7 +23,7 @@ class Signup extends React.Component {
   componentDidMount() {
     this.setState({
       email: this.props.match.params.email,
-      chatLink: this.props.match.params.privateChatLink
+      chatLink: decodeURIComponent(this.props.match.params.privateChatLink)
     })
     const component = this;
 
