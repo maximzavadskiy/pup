@@ -57,7 +57,7 @@ const CandidateList = ({
                                                 Star
                                             </Button>
                                             <Button
-                                                onClick={() => window.open('https://slack.com/app_redirect?channel=D9RQTSFDG&team=T9SS6CSMV','_blank')}
+                                                onClick={() => window.open(profile.privateChatUrl || 'http://url_not_set.com', '_blank')}
                                             >
                                                 <Glyphicon glyph="envelope" />
                                                 Private Chat
@@ -66,7 +66,7 @@ const CandidateList = ({
                                                 onClick={() => window.open('https://slack.com/app_redirect?channel=C9SLLBANA&team=T9SS6CSMV','_blank')}
                                             >
                                                 <Glyphicon glyph="globe" />
-                                                Guestbook Chat
+                                                Guestbook Chat (Dummy link)
                                             </Button>
                                         </div>
                                     }

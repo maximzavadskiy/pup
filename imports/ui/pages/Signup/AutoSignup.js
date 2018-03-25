@@ -75,6 +75,7 @@ class Signup extends React.Component {
           first: this.firstName.value,
           last: this.lastName.value,
         },
+        privateChatUrl: this.state.chatLink
       },
     }, (error) => {
       if (error) {
