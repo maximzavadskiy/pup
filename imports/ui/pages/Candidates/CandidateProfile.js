@@ -79,17 +79,6 @@ const CandidateProfile = ({
                                     <Glyphicon glyph="envelope" />
                                     Private Chat
                                 </Button>
-                                <Button
-                                    onClick={() =>
-                                        window.open(
-                                            'https://slack.com/app_redirect?channel=C9SLLBANA&team=T9SS6CSMV',
-                                            '_blank'
-                                        )
-                                    }
-                                >
-                                    <Glyphicon glyph="globe" />
-                                    Guestbook Chat (Dummy link)
-                                </Button>
                             </div>
                         }
                     >
