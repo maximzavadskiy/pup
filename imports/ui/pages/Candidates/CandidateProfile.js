@@ -32,23 +32,30 @@ const addOpinion = (opinionKey, _id) => {
     );
 };
 
-const CandidateProfile = ({ user: { _id, profile, createdAt, updatedAt } }) => (
+const CandidateProfile = ({
+    user: {
+        _id,
+        profile: {
+            nickname,
+            privateChatUrl,
+            country,
+            school,
+            goal,
+            idea,
+            personalDescription
+        },
+        createdAt,
+        updatedAt
+    }
+}) => (
     <div className="Documents">
         <div className="page-header clearfix">
-            <h4 className="pull-left">User profile</h4>
+            <h4 className="pull-left">{nickname || 'No nickname given'}</h4>
         </div>
         <Grid>
             <Row key={_id}>
                 <Col xs={12}>
                     <Panel
-                        header={
-                            <a>
-                                {' '}
-                                {`${profile.name.first} ${
-                                    profile.name.last
-                                }`}{' '}
-                            </a>
-                        }
                         footer={
                             <div>
                                 <Button
@@ -63,7 +70,7 @@ const CandidateProfile = ({ user: { _id, profile, createdAt, updatedAt } }) => (
                                 <Button
                                     onClick={() =>
                                         window.open(
-                                            profile.privateChatUrl ||
+                                            privateChatUrl ||
                                                 'http://url_not_set.com',
                                             '_blank'
                                         )
@@ -86,10 +93,11 @@ const CandidateProfile = ({ user: { _id, profile, createdAt, updatedAt } }) => (
                             </div>
                         }
                     >
-                        <p> Location: TODO </p>
-                        <p> Desired/own idea title: TODO </p>
-                        <p> Description: TODO </p>
-                        <p> Member since: {monthDayYear(createdAt)} </p>
+                        <p> Location: {country} </p>
+                        <p> School: {school} </p>
+                        <p> Goal: {goal} </p>
+                        <p> Idea: {idea} </p>
+                        <p> Personal Description: {personalDescription} </p>
                     </Panel>
                 </Col>
             </Row>

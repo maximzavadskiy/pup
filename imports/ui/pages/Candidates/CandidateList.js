@@ -42,16 +42,25 @@ const CandidateList = ({ loading, unratedUsers, match, history }) =>
             <Grid>
                 {unratedUsers.length ? (
                     unratedUsers.map(
-                        ({ _id, profile, createdAt, updatedAt }) => (
+                        ({
+                            _id,
+                            profile: {
+                                nickname,
+                                privateChatUrl,
+                                country,
+                                school,
+                                goal
+                            },
+                            createdAt,
+                            updatedAt
+                        }) => (
                             <Row key={_id}>
                                 <Col xs={12}>
                                     <Panel
                                         header={
                                             <a>
-                                                {' '}
-                                                {`${profile.name.first} ${
-                                                    profile.name.last
-                                                }`}{' '}
+                                                {nickname ||
+                                                    'No nickname given'}
                                             </a>
                                         }
                                         footer={
@@ -77,7 +86,7 @@ const CandidateList = ({ loading, unratedUsers, match, history }) =>
                                                 <Button
                                                     onClick={() =>
                                                         window.open(
-                                                            profile.privateChatUrl ||
+                                                            privateChatUrl ||
                                                                 'http://url_not_set.com',
                                                             '_blank'
                                                         )
@@ -100,14 +109,9 @@ const CandidateList = ({ loading, unratedUsers, match, history }) =>
                                             </div>
                                         }
                                     >
-                                        <p> Location: TODO </p>
-                                        <p> Desired/own idea title: TODO </p>
-                                        <p> Description: TODO </p>
-                                        <p>
-                                            {' '}
-                                            Member since:{' '}
-                                            {monthDayYear(createdAt)}{' '}
-                                        </p>
+                                        <p> Country: {country} </p>
+                                        <p> School: {school} </p>
+                                        <p> Goal: {goal} </p>
                                     </Panel>
                                 </Col>
                             </Row>
