@@ -14,6 +14,7 @@ import Index from '../../pages/Index/Index';
 import EngagedCandidatesList from '../../pages/Candidates/EngagedCandidatesList';
 import CandidateList from '../../pages/Candidates/CandidateList';
 import CandidateChat from '../../pages/Candidates/CandidateChat';
+import CandidateProfile from '../../pages/Candidates/CandidateProfile';
 import NewDocument from '../../pages/NewDocument/NewDocument';
 import ViewDocument from '../../pages/ViewDocument/ViewDocument';
 import EditDocument from '../../pages/EditDocument/EditDocument';
@@ -36,73 +37,133 @@ import getUserName from '../../../modules/get-user-name';
 import './App.scss';
 
 const App = props => (
-  <Router>
-    {!props.loading ? (
-      <div className="App">
-        {props.authenticated ?
-          <VerifyEmailAlert
-            userId={props.userId}
-            emailVerified={props.emailVerified}
-            emailAddress={props.emailAddress}
-          />
-          : ''}
-        <Navigation {...props} />
-        <Grid>
-          <Switch>
-            <Route exact name="index" path="/" component={Index} />
-            <Authenticated exact path="/engagements-list" component={EngagedCandidatesList} {...props} />
-            <Authenticated exact path="/find-teammates" component={CandidateList} {...props} />
-            <Authenticated exact path="/chat/:_id" component={CandidateChat} {...props} />
-            <Authenticated exact path="/matches/:_id" component={ViewDocument} {...props} />
-            <Authenticated exact path="/profile" component={Profile} {...props} />
-            <Public path="/signup" component={Signup} {...props} />
-            <Public path="/auto-signup/email=:email/private-chat-link=:privateChatLink" component={AutoSignup} {...props} />
-            <Public path="/login" component={Login} {...props} />
-            <Route path="/logout" component={Logout} {...props} />
-            <Route name="verify-email" path="/verify-email/:token" component={VerifyEmail} />
-            <Route name="recover-password" path="/recover-password" component={RecoverPassword} />
-            <Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />
-            <Route name="terms" path="/terms" component={Terms} />
-            <Route name="privacy" path="/privacy" component={Privacy} />
-            <Route name="examplePage" path="/example-page" component={ExamplePage} />
-            <Route component={NotFound} />
-          </Switch>
-        </Grid>
-        <Footer />
-      </div>
-    ) : ''}
-  </Router>
+    <Router>
+        {!props.loading ? (
+            <div className="App">
+                {props.authenticated ? (
+                    <VerifyEmailAlert
+                        userId={props.userId}
+                        emailVerified={props.emailVerified}
+                        emailAddress={props.emailAddress}
+                    />
+                ) : (
+                    ''
+                )}
+                <Navigation {...props} />
+                <Grid>
+                    <Switch>
+                        <Route exact name="index" path="/" component={Index} />
+                        <Authenticated
+                            exact
+                            path="/engagements-list"
+                            component={EngagedCandidatesList}
+                            {...props}
+                        />
+                        <Authenticated
+                            exact
+                            path="/find-teammates"
+                            component={CandidateList}
+                            {...props}
+                        />
+                        <Authenticated
+                            exact
+                            path="/find-teammates/:_id"
+                            component={CandidateProfile}
+                            {...props}
+                        />
+                        <Authenticated
+                            exact
+                            path="/chat/:_id"
+                            component={CandidateChat}
+                            {...props}
+                        />
+                        <Authenticated
+                            exact
+                            path="/profile"
+                            component={Profile}
+                            {...props}
+                        />
+                        <Public path="/signup" component={Signup} {...props} />
+                        <Public
+                            path="/auto-signup/email=:email/private-chat-link=:privateChatLink"
+                            component={AutoSignup}
+                            {...props}
+                        />
+                        <Public path="/login" component={Login} {...props} />
+                        <Route path="/logout" component={Logout} {...props} />
+                        <Route
+                            name="verify-email"
+                            path="/verify-email/:token"
+                            component={VerifyEmail}
+                        />
+                        <Route
+                            name="recover-password"
+                            path="/recover-password"
+                            component={RecoverPassword}
+                        />
+                        <Route
+                            name="reset-password"
+                            path="/reset-password/:token"
+                            component={ResetPassword}
+                        />
+                        <Route name="terms" path="/terms" component={Terms} />
+                        <Route
+                            name="privacy"
+                            path="/privacy"
+                            component={Privacy}
+                        />
+                        <Route
+                            name="examplePage"
+                            path="/example-page"
+                            component={ExamplePage}
+                        />
+                        <Route component={NotFound} />
+                    </Switch>
+                </Grid>
+                <Footer />
+            </div>
+        ) : (
+            ''
+        )}
+    </Router>
 );
 
 App.defaultProps = {
-  userId: '',
-  emailAddress: '',
+    userId: '',
+    emailAddress: ''
 };
 
 App.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  userId: PropTypes.string,
-  emailAddress: PropTypes.string,
-  emailVerified: PropTypes.bool.isRequired,
-  authenticated: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+    userId: PropTypes.string,
+    emailAddress: PropTypes.string,
+    emailVerified: PropTypes.bool.isRequired,
+    authenticated: PropTypes.bool.isRequired
 };
 
 export default withTracker(() => {
-  const loggingIn = Meteor.loggingIn();
-  const user = Meteor.user();
-  const userId = Meteor.userId();
-  const loading = !Roles.subscription.ready();
-  const name = user && user.profile && user.profile.name && getUserName(user.profile.name);
-  const emailAddress = user && user.emails && user.emails[0].address;
+    const loggingIn = Meteor.loggingIn();
+    const user = Meteor.user();
+    const userId = Meteor.userId();
+    const loading = !Roles.subscription.ready();
+    const name =
+        user &&
+        user.profile &&
+        user.profile.name &&
+        getUserName(user.profile.name);
+    const emailAddress = user && user.emails && user.emails[0].address;
 
-  return {
-    loading,
-    loggingIn,
-    authenticated: !loggingIn && !!userId,
-    name: name || emailAddress,
-    roles: !loading && Roles.getRolesForUser(userId),
-    userId,
-    emailAddress,
-    emailVerified: user && user.emails ? user && user.emails && user.emails[0].verified : true,
-  };
+    return {
+        loading,
+        loggingIn,
+        authenticated: !loggingIn && !!userId,
+        name: name || emailAddress,
+        roles: !loading && Roles.getRolesForUser(userId),
+        userId,
+        emailAddress,
+        emailVerified:
+            user && user.emails
+                ? user && user.emails && user.emails[0].verified
+                : true
+    };
 })(App);

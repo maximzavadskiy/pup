@@ -19,7 +19,6 @@ import _ from 'lodash';
 // import UsersCollection from '../../../api/Documents/Documents';
 
 import { timeago, monthDayYear } from '../../../modules/dates';
-import Loading from '../../components/Loading/Loading';
 
 import './Documents.scss';
 
@@ -36,7 +35,7 @@ const addOpinion = (opinionKey, _id) => {
 const CandidateProfile = ({ user: { _id, profile, createdAt, updatedAt } }) => (
     <div className="Documents">
         <div className="page-header clearfix">
-            <h4 className="pull-left">Find teammates</h4>
+            <h4 className="pull-left">User profile</h4>
         </div>
         <Grid>
             <Row key={_id}>
@@ -100,7 +99,6 @@ const CandidateProfile = ({ user: { _id, profile, createdAt, updatedAt } }) => (
 
 CandidateProfile.propTypes = {
     user: PropTypes.object,
-
     history: PropTypes.object.isRequired
 };
 
@@ -108,10 +106,8 @@ export default withTracker(({ match }) => {
     // const subscription = Meteor.subscribe('users.unrated');
 
     return {
-        user: Meteor.users
-            .find({
-                _id: match.params._id
-            })
-            .fetch()
+        user: Meteor.users.findOne({
+            _id: match.params._id
+        })
     };
 })(CandidateProfile);
