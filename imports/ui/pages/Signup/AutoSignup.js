@@ -82,6 +82,10 @@ class Signup extends React.Component {
                         last: this.nickname.value
                     },
                     country: this.country.value,
+                    school: this.school.value,
+                    goal: this.goal.value,
+                    idea: this.idea.value,
+                    personalDescription: this.personalDescription.value,
                     privateChatUrl: this.state.chatLink
                 }
             },
@@ -118,25 +122,19 @@ class Signup extends React.Component {
                             ref={form => (this.form = form)}
                             onSubmit={event => event.preventDefault()}
                         >
-                            <Row>
-                                <Col xs={6}>
-                                    <FormGroup>
-                                        <ControlLabel> Nickname </ControlLabel>
-                                        <input
-                                            type="text"
-                                            name="nickname"
-                                            ref={nickname =>
-                                                (this.nickname = nickname)
-                                            }
-                                            className="form-control"
-                                        />
-                                        <InputHint>
-                                            {' '}
-                                            No real names = fun team building!{' '}
-                                        </InputHint>
-                                    </FormGroup>
-                                </Col>
-                            </Row>
+                            <FormGroup>
+                                <ControlLabel> Nickname </ControlLabel>
+                                <input
+                                    type="text"
+                                    name="nickname"
+                                    ref={nickname => (this.nickname = nickname)}
+                                    className="form-control"
+                                />
+                                <InputHint>
+                                    {' '}
+                                    No real names = fun team building!{' '}
+                                </InputHint>
+                            </FormGroup>
                             <FormGroup>
                                 <ControlLabel>Email Address</ControlLabel>
                                 <input
@@ -175,14 +173,65 @@ class Signup extends React.Component {
                                 />
                                 <InputHint>Country of Residence</InputHint>
                             </FormGroup>
-                            {
-                                //     country,
-                                //     school,
-                                //     goal,
-                                //     idea,
-                                //     personalDescription
-                                // }
-                            }
+
+                            <FormGroup>
+                                <ControlLabel>School</ControlLabel>
+                                <input
+                                    type="text"
+                                    name="school"
+                                    ref={school => (this.school = school)}
+                                    className="form-control"
+                                />
+                                <InputHint>Where you study?</InputHint>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <ControlLabel>Goal</ControlLabel>
+                                <input
+                                    type="text"
+                                    name="goal"
+                                    ref={goal => (this.goal = goal)}
+                                    className="form-control"
+                                />
+                                <InputHint>
+                                    What is your dream? Or what big problem you
+                                    want to solve in the world?{' '}
+                                </InputHint>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <ControlLabel>Idea</ControlLabel>
+                                <input
+                                    type="text"
+                                    name="idea"
+                                    ref={idea => (this.idea = idea)}
+                                    className="form-control"
+                                />
+                                <InputHint>
+                                    {' '}
+                                    Your own idea / Idea that you would love to
+                                    work on.{' '}
+                                </InputHint>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <ControlLabel>
+                                    Personal Description
+                                </ControlLabel>
+                                <input
+                                    type="text"
+                                    name="personalDescription"
+                                    ref={personalDescription =>
+                                        (this.personalDescription = personalDescription)
+                                    }
+                                    className="form-control"
+                                />
+                                <InputHint>
+                                    {' '}
+                                    Tell a bit about what you like doing.{' '}
+                                </InputHint>
+                            </FormGroup>
+
                             <AccountPageFooter>
                                 <FormGroup>
                                     <ControlLabel>
