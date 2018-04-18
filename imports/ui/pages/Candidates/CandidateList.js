@@ -23,25 +23,30 @@ import Loading from '../../components/Loading/Loading';
 
 import './Documents.scss';
 
-const addOpinion = (opinionKey, _id) => {
+const toggleOpinion = (opinionKey, _id) => {
     const opinionPath = `profile.${opinionKey}`;
+    const likeIds = Meteor.user().profile.teammateLikes;
     Meteor.users.update(
         { _id: Meteor.user()._id },
-        {
-            $addToSet: { [opinionPath]: _id }
-        }
+        _.includes(likeIds, _id)
+            ? {
+                  $pull: { [opinionPath]: _id }
+              }
+            : {
+                  $addToSet: { [opinionPath]: _id }
+              }
     );
 };
 
-const CandidateList = ({ loading, unratedUsers, match, history }) =>
+const CandidateList = ({ loading, candidates, match, history }) =>
     !loading ? (
         <div className="Documents">
             <div className="page-header clearfix">
                 <h4 className="pull-left">Find teammates</h4>
             </div>
             <Grid>
-                {unratedUsers.length ? (
-                    unratedUsers.map(
+                {candidates.length ? (
+                    candidates.map(
                         ({
                             _id,
                             profile: {
@@ -72,9 +77,18 @@ const CandidateList = ({ loading, unratedUsers, match, history }) =>
                                                     Profile{' '}
                                                 </Link>
                                                 <Button
-                                                    bsStyle="primary"
+                                                    bsStyle={`${
+                                                        _.includes(
+                                                            Meteor.user()
+                                                                .profile
+                                                                .teammateLikes,
+                                                            _id
+                                                        )
+                                                            ? 'primary'
+                                                            : ''
+                                                    }`}
                                                     onClick={() =>
-                                                        addOpinion(
+                                                        toggleOpinion(
                                                             'teammateLikes',
                                                             _id
                                                         )
@@ -120,7 +134,7 @@ const CandidateList = ({ loading, unratedUsers, match, history }) =>
 
 CandidateList.propTypes = {
     loading: PropTypes.bool.isRequired,
-    unratedUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+    candidates: PropTypes.arrayOf(PropTypes.object).isRequired,
     match: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
 };
@@ -128,14 +142,14 @@ CandidateList.propTypes = {
 export default withTracker(() => {
     // const subscription = Meteor.subscribe('users.unrated');
     const excludeUsers = _.concat(
-        Meteor.user().profile.teammateLikes || [],
-        Meteor.user().profile.teammateSkips || [],
+        // Meteor.user().profile.teammateLikes || [],
+        // Meteor.user().profile.teammateSkips || [],
         Meteor.user()._id
     );
 
     return {
         loading: false,
-        unratedUsers: Meteor.users
+        candidates: Meteor.users
             .find({
                 _id: { $nin: excludeUsers }
             })
