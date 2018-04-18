@@ -13,7 +13,6 @@ import Public from '../../components/Public/Public';
 import Index from '../../pages/Index/Index';
 import EngagedCandidatesList from '../../pages/Candidates/EngagedCandidatesList';
 import CandidateList from '../../pages/Candidates/CandidateList';
-import CandidateChat from '../../pages/Candidates/CandidateChat';
 import CandidateProfile from '../../pages/Candidates/CandidateProfile';
 import NewDocument from '../../pages/NewDocument/NewDocument';
 import ViewDocument from '../../pages/ViewDocument/ViewDocument';
@@ -69,12 +68,6 @@ const App = props => (
                             exact
                             path="/find-teammates/:_id"
                             component={CandidateProfile}
-                            {...props}
-                        />
-                        <Authenticated
-                            exact
-                            path="/chat/:_id"
-                            component={CandidateChat}
                             {...props}
                         />
                         <Authenticated
