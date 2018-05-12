@@ -78,6 +78,7 @@ class Signup extends React.Component {
                         first: this.nickname.value,
                         last: this.nickname.value
                     },
+                    //type: 'HAS_IDEA', 'SEARCHING_IDEA' , 'MENTOR', 'COMPANY'
                     //++ title: this.title.value, // ++ serves as title
                     //++  tags: ['Technology', 'Art'],
                     school: this.school.value, // ++

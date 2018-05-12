@@ -41,6 +41,29 @@ const toggleOpinion = (opinionKey, _id) => {
 // Set demo data via:
 // Meteor.users.find().fetch().map((user) => Meteor.users.update({_id: user._id}, {$set: {'profile.tags': ['Technology', 'Art']}}))
 
+const HAS_IDEA = 'HAS_IDEA';
+const SEARCHING_IDEA = 'SEARCHING_IDEA';
+const MENTOR = 'MENTOR';
+const COMPANY = 'COMPANY';
+
+const getIconForCandidateType = type => {
+    if (type === HAS_IDEA) {
+        return 'far fa-lightbulb';
+    }
+
+    if (type === SEARCHING_IDEA) {
+        return 'fas fa-binoculars';
+    }
+
+    if (type === MENTOR) {
+        return 'fas fa-chalkboard-teacher';
+    }
+
+    if (type === COMPANY) {
+        return 'fab fa-black-tie';
+    }
+};
+
 const CandidateList = ({ loading, candidates, match, history }) => {
     return !loading ? (
         <div className="Documents">
@@ -49,10 +72,10 @@ const CandidateList = ({ loading, candidates, match, history }) => {
             </div>
             {candidates.length ? (
                 _.sortBy(candidates, 'createdAt').map(
-                    ({ _id, profile: { nickname, title, tags } }) => (
+                    ({ _id, profile: { nickname, title, tags, type } }) => (
                         <div key={_id} className="teamder-card">
                             <div className="icon">
-                                <i class="far fa-lightbulb" />
+                                <i class={getIconForCandidateType(type)} />
                             </div>
                             <div className="content">
                                 <p className="name">
