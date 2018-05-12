@@ -38,99 +38,65 @@ const toggleOpinion = (opinionKey, _id) => {
     );
 };
 
-const CandidateList = ({ loading, candidates, match, history }) =>
-    !loading ? (
+// Set demo data via:
+// Meteor.users.find().fetch().map((user) => Meteor.users.update({_id: user._id}, {$set: {'profile.tags': ['Technology', 'Art']}}))
+
+const CandidateList = ({ loading, candidates, match, history }) => {
+    return !loading ? (
         <div className="Documents">
             <div className="page-header clearfix">
                 <h4 className="pull-left">Find teammates</h4>
             </div>
-            <Grid>
-                {candidates.length ? (
-                    candidates.map(
-                        ({
-                            _id,
-                            profile: {
-                                nickname,
-                                privateChatUrl,
-                                country,
-                                school,
-                                goal
-                            },
-                            createdAt,
-                            updatedAt
-                        }) => (
-                            <Row key={_id}>
-                                <Col xs={12}>
-                                    <Panel
-                                        header={
-                                            <a>
-                                                {nickname ||
-                                                    'No nickname given'}
-                                            </a>
-                                        }
-                                        footer={
-                                            <div>
-                                                <Link
-                                                    to={`find-teammates/${_id}`}
-                                                >
-                                                    {' '}
-                                                    Profile{' '}
-                                                </Link>
-                                                <Button
-                                                    bsStyle={`${
-                                                        _.includes(
-                                                            Meteor.user()
-                                                                .profile
-                                                                .teammateLikes,
-                                                            _id
-                                                        )
-                                                            ? 'primary'
-                                                            : ''
-                                                    }`}
-                                                    onClick={() =>
-                                                        toggleOpinion(
-                                                            'teammateLikes',
-                                                            _id
-                                                        )
-                                                    }
-                                                >
-                                                    <Glyphicon glyph="star" />
-                                                    Star
-                                                </Button>
-                                                <Button
-                                                    onClick={() =>
-                                                        window.open(
-                                                            privateChatUrl ||
-                                                                'http://url_not_set.com',
-                                                            '_blank'
-                                                        )
-                                                    }
-                                                >
-                                                    <Glyphicon glyph="envelope" />
-                                                    Private Chat
-                                                </Button>
-                                            </div>
-                                        }
+            {candidates.length ? (
+                _.sortBy(candidates, 'createdAt').map(
+                    ({ _id, profile: { nickname, title, tags } }) => (
+                        <div key={_id} className="teamder-card">
+                            <div className="icon">
+                                <i class="far fa-lightbulb" />
+                            </div>
+                            <div className="content">
+                                <p className="name">
+                                    {' '}
+                                    {nickname || '[No nickname given]'}{' '}
+                                </p>
+                                <p className="idea-title">
+                                    {' '}
+                                    {title || '[No title given]'}
+                                </p>
+                                <p className="tags">
+                                    {' '}
+                                    {_.isEmpty(tags)
+                                        ? '[No tags given]'
+                                        : tags.map(tag => (
+                                              <span className="tag">
+                                                  {' '}
+                                                  {tag}{' '}
+                                              </span>
+                                          ))}
+                                </p>
+                            </div>
+                            {/* <Link
+                                        to={`find-teammates/${_id}`}
                                     >
-                                        <p> Country: {country} </p>
-                                        <p> School: {school} </p>
-                                        <p> Goal: {goal} </p>
-                                    </Panel>
-                                </Col>
-                            </Row>
-                        )
+                                        {' '}
+                                        Profile{' '}
+                                    </Link> */}
+
+                            {/* <Glyphicon glyph="star" /> */}
+                        </div>
                     )
-                ) : (
-                    <Alert bsStyle="warning">
-                        You are the first one! I bet other people will join in
-                        few minutes.
-                    </Alert>
-                )}
-            </Grid>
+                )
+            ) : (
+                <Alert bsStyle="warning">
+                    You are the first one! I bet other people will join in few
+                    minutes.
+                </Alert>
+            )}
         </div>
     ) : (
         <Loading />
     );
+};
 
 CandidateList.propTypes = {
     loading: PropTypes.bool.isRequired,

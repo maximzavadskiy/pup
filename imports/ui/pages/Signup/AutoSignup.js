@@ -41,9 +41,7 @@ class Signup extends React.Component {
                 },
                 nickname: { required: true },
                 privateChatUrl: { required: true },
-                country: { required: true },
-                school: { required: true },
-                goal: { required: true }
+                school: { required: true }
             },
             messages: {
                 firstName: {
@@ -75,17 +73,17 @@ class Signup extends React.Component {
                 email: this.emailAddress.value,
                 password: this.password.value,
                 profile: {
-                    nickname: this.nickname.value,
-                    // DEPRECATED name is not used, use nickname
+                    nickname: this.nickname.value, // ++ shows in candidate list
                     name: {
                         first: this.nickname.value,
                         last: this.nickname.value
                     },
-                    country: this.country.value,
-                    school: this.school.value,
-                    goal: this.goal.value,
-                    idea: this.idea.value,
-                    personalDescription: this.personalDescription.value,
+                    //++ title: this.title.value, // ++ serves as title
+                    //++  tags: ['Technology', 'Art'],
+                    school: this.school.value, // ++
+                    idea: this.idea.value, // ++ idea in detail
+                    //++ currentSkills: this.currentSkills.value
+                    //++ desiredSkills: this.desiredSkills.value
                     privateChatUrl: this.state.chatLink
                 }
             },
@@ -164,17 +162,6 @@ class Signup extends React.Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <ControlLabel>Country</ControlLabel>
-                                <input
-                                    type="text"
-                                    name="country"
-                                    ref={country => (this.country = country)}
-                                    className="form-control"
-                                />
-                                <InputHint>Country of Residence</InputHint>
-                            </FormGroup>
-
-                            <FormGroup>
                                 <ControlLabel>School</ControlLabel>
                                 <input
                                     type="text"
@@ -183,20 +170,6 @@ class Signup extends React.Component {
                                     className="form-control"
                                 />
                                 <InputHint>Where you study?</InputHint>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <ControlLabel>Goal</ControlLabel>
-                                <input
-                                    type="text"
-                                    name="goal"
-                                    ref={goal => (this.goal = goal)}
-                                    className="form-control"
-                                />
-                                <InputHint>
-                                    What is your dream? Or what big problem you
-                                    want to solve in the world?{' '}
-                                </InputHint>
                             </FormGroup>
 
                             <FormGroup>
@@ -211,24 +184,6 @@ class Signup extends React.Component {
                                     {' '}
                                     Your own idea / Idea that you would love to
                                     work on.{' '}
-                                </InputHint>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <ControlLabel>
-                                    Personal Description
-                                </ControlLabel>
-                                <input
-                                    type="text"
-                                    name="personalDescription"
-                                    ref={personalDescription =>
-                                        (this.personalDescription = personalDescription)
-                                    }
-                                    className="form-control"
-                                />
-                                <InputHint>
-                                    {' '}
-                                    Tell a bit about what you like doing.{' '}
                                 </InputHint>
                             </FormGroup>
 

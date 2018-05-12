@@ -1,0 +1,37 @@
+@import './colors.scss';
+
+.teamder-card {
+    display: flex;
+    align-items: stretch;
+
+    .icon {
+        display: inline-flex; // this aligns icon to top  
+        width: 20%;
+        font-size: 3.5rem;
+        color: $gray-light;
+    }
+
+    .content {
+        width: 80%;
+        .name {
+            font-size: 18px; //same as h4 
+            line-height: 1.5rem;
+        }
+        .idea-title {
+            color: $gray-light;
+        }
+        .tags {
+            .tag {
+                margin-right: 1rem;
+                padding: 0.8rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                line-height: 3rem;
+                border-radius: 100px;
+                background-color: $gray-lighter;
+            }
+        }
+    }
+
+    margin-bottom: 2rem;
+}

@@ -1,7 +1,9 @@
 @import './mixins';
+@import './colors';
 
 .page-header {
   margin-top: 0;
+  border: none;
 }
 
 @include breakpoint(tablet) {
@@ -12,8 +14,14 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  color: $gray-dark;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Anton', sans-serif;
+}
+
+.container {
+  padding-right: 30px;
+  padding-left: 30px;
 }
